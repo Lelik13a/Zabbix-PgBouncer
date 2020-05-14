@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-05-14T06:26:57Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template App PgBouncer</template>
+            <name>Template App PgBouncer</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>PgBouncer</name>
+                </application>
+                <application>
+                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>Total free client connections</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.lists[free_clients]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <description>Count of free clients.</description>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params>free_clients\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.lists</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Total free server connections</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.lists[free_servers]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <description>Count of free servers.</description>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params>free_servers\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.lists</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Total login client connections</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.lists[login_clients]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params>login_clients\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.lists</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Total pools</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.lists[pools]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <description>Count of pools.</description>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params>pools\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.lists</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Total used client connections</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.lists[used_clients]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <description>Count of used clients.</description>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params>used_clients\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.lists</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Total used server connections</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.lists[used_servers]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <description>Count of used servers.</description>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params>used_servers\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.lists</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Total users</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.lists[users]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <description>Count of users.</description>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params>users\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.lists</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>PgBouncer lists raw</name>
+                    <key>pgbouncer.pool.lists</key>
+                    <history>0</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>PgBouncer pools raw</name>
+                    <key>pgbouncer.pool.pools</key>
+                    <history>0</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>PgBouncer totals raw</name>
+                    <key>pgbouncer.pool.totals</key>
+                    <history>0</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Average number of SQL queries among all databases</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.total.avg_query_count</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params> avg_query_count\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.totals</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Average query duration duration among all databases</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.total.avg_query_time</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>ms</units>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params> avg_query_time\s+\|(.*)
+\1</params>
+                        </step>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.001</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.totals</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Time spent by clients waiting for a server among all databases (average per second)</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.total.avg_wait_time</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>ms</units>
+                    <description>Time spent by clients waiting for a server, in miliseconds (average per second).</description>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params> avg_wait_time\s+\|(.*)
+\1</params>
+                        </step>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.001</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.totals</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Average number of SQL transactions among all databases</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.total.avg_xact_count</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params> avg_xact_count\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.totals</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Average transaction duration among all databases</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.total.avg_xact_time</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>ms</units>
+                    <description>Average transactions per second in last stat period.</description>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params> avg_xact_time\s+\|(.*)
+\1</params>
+                        </step>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.001</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.totals</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Total received data from clients among all databases</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.total.total_client_bytes</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <units>Bps</units>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params> total_client_bytes\s+\|(.*)
+\1</params>
+                        </step>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.totals</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Total number of SQL queries among all databases</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.total.total_query_count</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params> total_query_count\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.totals</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Total sent data to clients among all databases</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.total.total_server_bytes</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <units>Bps</units>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params> total_server_bytes\s+\|(.*)
+\1</params>
+                        </step>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.totals</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Total number of SQL transactions among all databases</name>
+                    <type>DEPENDENT</type>
+                    <key>pgbouncer.total.total_xact_count</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>REGEX</type>
+                            <params> total_xact_count\s+\|(.*)
+\1</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>pgbouncer.pool.totals</key>
+                    </master_item>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>PgBouncer pools discovery</name>
+                    <key>pgbouncer.pool.discover</key>
+                    <delay>1h</delay>
+                    <lifetime>0</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>PgBouncer client {#PGBOUNCER_USER}: active connections</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.pools.cl_active[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Client connections that are linked to server connection and can process queries.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+{#PGBOUNCER_USER}\s+\|\s+(\d+)
+\1</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.pools</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PgBouncer client {#PGBOUNCER_USER}: active waiting</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.pools.cl_waiting[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Client connections that have sent queries but have not yet got a server connection.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+{#PGBOUNCER_USER}\s+\|\s+(\d+)\s+\|\s+(\d+)
+\2</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.pools</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PgBouncer client {#PGBOUNCER_USER}: maxwait</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.pools.maxwait[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <value_type>FLOAT</value_type>
+                            <units>s</units>
+                            <description>How long the first (oldest) client in the queue has waited, in seconds. If this starts increasing, then the current pool of servers does not handle requests quickly enough. The reason may be either an overloaded server or just too small of a pool_size setting.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+{#PGBOUNCER_USER}\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)
+\8</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.pools</key>
+                            </master_item>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;1</expression>
+                                    <name>PgBouncer client {#PGBOUNCER_USER}: maxwait  is more than 1 second</name>
+                                    <opdata>wait time: $1</opdata>
+                                    <priority>AVERAGE</priority>
+                                    <description>How long the first (oldest) client in the queue has waited, in seconds.</description>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PgBouncer client {#PGBOUNCER_USER}: maxwait micro seconds</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.pools.maxwait_us[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <value_type>FLOAT</value_type>
+                            <units>micros</units>
+                            <description>How long the first (oldest) client in the queue has waited, in seconds. If this starts increasing, then the current pool of servers does not handle requests quickly enough. The reason may be either an overloaded server or just too small of a pool_size setting.&#13;
+Microsecond part of the maximum waiting time.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+{#PGBOUNCER_USER}\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)
+\9</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.pools</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PgBouncer client {#PGBOUNCER_USER}: pool mode</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.pools.pool_mode[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>0</trends>
+                            <value_type>CHAR</value_type>
+                            <description>The pooling mode in use</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+{#PGBOUNCER_USER}.+\|\s+(\S+)
+\1</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.pools</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PgBouncer server {#PGBOUNCER_USER}: active connections</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.pools.sv_active[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Server connections that are linked to a client.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+{#PGBOUNCER_USER}\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)
+\3</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.pools</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PgBouncer server {#PGBOUNCER_USER}: unused connections</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.pools.sv_idle[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Server connections that are unused and immediately usable for client queries.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+{#PGBOUNCER_USER}\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)
+\4</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.pools</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PgBouncer server {#PGBOUNCER_USER}: logging connections</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.pools.sv_login[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Server connections currently in the process of logging in.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+{#PGBOUNCER_USER}\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)
+\7</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.pools</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PgBouncer server {#PGBOUNCER_USER}: tested connections</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.pools.sv_tested[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Server connections that are currently running either server_reset_query or server_check_query.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+{#PGBOUNCER_USER}\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)
+\6</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.pools</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PgBouncer server {#PGBOUNCER_USER}: used connections</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.pools.sv_used[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Server connections that have been idle for more than server_check_delay, so they need server_check_query to run on them before they can be used again.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+{#PGBOUNCER_USER}\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)\s+\|\s+(\d+)
+\5</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.pools</key>
+                            </master_item>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+</zabbix_export>
