@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-05-14T06:26:57Z</date>
+    <date>2020-05-14T07:36:52Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -11,6 +11,8 @@
         <template>
             <template>Template App PgBouncer</template>
             <name>Template App PgBouncer</name>
+            <description>Check PgBouncer status and LLD pools.&#13;
+Check pools metrics.</description>
             <groups>
                 <group>
                     <name>Templates</name>
@@ -729,8 +731,142 @@ Microsecond part of the maximum waiting time.</description>
                             </master_item>
                         </item_prototype>
                     </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>PgBouncer client {#PGBOUNCER_DATABASE}, {#PGBOUNCER_USER}: connections</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>199C0D</color>
+                                    <item>
+                                        <host>Template App PgBouncer</host>
+                                        <key>pgbouncer.pools.cl_active[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>F63100</color>
+                                    <item>
+                                        <host>Template App PgBouncer</host>
+                                        <key>pgbouncer.pools.cl_waiting[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>PgBouncer server {#PGBOUNCER_DATABASE}, {#PGBOUNCER_USER}: connections</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>199C0D</color>
+                                    <item>
+                                        <host>Template App PgBouncer</host>
+                                        <key>pgbouncer.pools.sv_active[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>F63100</color>
+                                    <item>
+                                        <host>Template App PgBouncer</host>
+                                        <key>pgbouncer.pools.sv_login[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <color>2774A4</color>
+                                    <item>
+                                        <host>Template App PgBouncer</host>
+                                        <key>pgbouncer.pools.sv_tested[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>3</sortorder>
+                                    <color>F7941D</color>
+                                    <item>
+                                        <host>Template App PgBouncer</host>
+                                        <key>pgbouncer.pools.sv_idle[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>4</sortorder>
+                                    <color>FC6EA3</color>
+                                    <item>
+                                        <host>Template App PgBouncer</host>
+                                        <key>pgbouncer.pools.sv_used[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
                 </discovery_rule>
             </discovery_rules>
         </template>
     </templates>
+    <graphs>
+        <graph>
+            <name>PgBouncer: connections</name>
+            <graph_items>
+                <graph_item>
+                    <color>199C0D</color>
+                    <item>
+                        <host>Template App PgBouncer</host>
+                        <key>pgbouncer.lists[free_clients]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App PgBouncer</host>
+                        <key>pgbouncer.lists[free_servers]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App PgBouncer</host>
+                        <key>pgbouncer.lists[login_clients]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>F7941D</color>
+                    <item>
+                        <host>Template App PgBouncer</host>
+                        <key>pgbouncer.lists[used_clients]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>4</sortorder>
+                    <color>FC6EA3</color>
+                    <item>
+                        <host>Template App PgBouncer</host>
+                        <key>pgbouncer.lists[used_servers]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>PgBouncer: Total data flow among all databases</name>
+            <graph_items>
+                <graph_item>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>00FF00</color>
+                    <item>
+                        <host>Template App PgBouncer</host>
+                        <key>pgbouncer.total.total_client_bytes</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>0040FF</color>
+                    <item>
+                        <host>Template App PgBouncer</host>
+                        <key>pgbouncer.total.total_server_bytes</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
 </zabbix_export>
