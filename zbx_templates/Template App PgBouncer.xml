@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-05-21T07:12:34Z</date>
+    <date>2020-06-03T12:57:36Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -552,7 +552,7 @@ Check pools metrics.</description>
                                 <trigger_prototype>
                                     <expression>{last()}&gt;1</expression>
                                     <name>PgBouncer client {#PGBOUNCER_USER}: maxwait  is more than 1 second</name>
-                                    <opdata>wait time: $1</opdata>
+                                    <opdata>wait time:  {ITEM.LASTVALUE1}</opdata>
                                     <priority>AVERAGE</priority>
                                     <description>How long the first (oldest) client in the queue has waited, in seconds.</description>
                                 </trigger_prototype>
@@ -584,6 +584,15 @@ Microsecond part of the maximum waiting time.</description>
                             <master_item>
                                 <key>pgbouncer.pool.pools</key>
                             </master_item>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;100</expression>
+                                    <name>PgBouncer client {#PGBOUNCER_USER}: maxwait  is more than 100 micro seconds</name>
+                                    <opdata>wait time:  {ITEM.LASTVALUE1}</opdata>
+                                    <priority>WARNING</priority>
+                                    <description>How long the first (oldest) client in the queue has waited, in seconds.</description>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>PgBouncer client {#PGBOUNCER_USER}: pool mode</name>
