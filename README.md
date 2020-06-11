@@ -2,6 +2,8 @@
 Check PgBouncer status and LLD pools.  
 Check pools metrics. 
 
+![pgbouncer](https://user-images.githubusercontent.com/12905969/84354505-2da9fa00-abeb-11ea-8a54-92a6aaf2ea3a.png)
+
 
 # Dependencies
 psql, bash, zabbix-agent.
