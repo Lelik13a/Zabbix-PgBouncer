@@ -1,9 +1,8 @@
 #!/bin/sh
 
-MON_USER=postgres
-MON_PASSWORD=postgres
-PGBOUNCER_PORT=6432
-PGBOUNCER_HOST="127.0.0.1"
+PGBOUNCER_HOST=$(head -n 1 ~zabbix/.pgpass |cut -d: -f1)
+PGBOUNCER_PORT=$(head -n 1 ~zabbix/.pgpass |cut -d: -f2)
+MON_USER=$(head -n 1 ~zabbix/.pgpass |cut -d: -f4)
 
 COMMAND=$1
 #USER=$3
@@ -12,7 +11,7 @@ COMMAND=$1
 if [ "x$COMMAND" = "xdiscover" ]
 then
         # discovery bases and users
-    env PGPASSWORD=$MON_PASSWORD psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show pools;' \
+    psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show pools;' \
       | awk -F'|' 'BEGIN { printf "{\"data\":["; n=0; }
                    /\|/ { if (n != 0)
                             printf ",";
@@ -24,16 +23,16 @@ then
 elif [ "x$COMMAND" = "xtotals" ]
 then
         # get total statistic
-  env PGPASSWORD=$MON_PASSWORD psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show totals;'
+    psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show totals;'
 
 elif [ "x$COMMAND" = "xlists" ]
 then
         # get internal information
-  env PGPASSWORD=$MON_PASSWORD psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show lists;'
+    psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show lists;'
 
 elif [ "x$COMMAND" = "xpools" ]
 then
         # get pools statistic
-  env PGPASSWORD=$MON_PASSWORD psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show pools;'
+    psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show pools;'
 
 fi
