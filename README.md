@@ -17,9 +17,10 @@ Installation
 2. copy zabbix_agentd.d/pgbouncer.conf to /etc/zabbix/zabbix_agentd.d/
 3. chmod 755 /var/lib/zabbix/externalscripts/pgbouncer.sh and chown zabbix.zabbix /var/lib/zabbix/externalscripts/pgbouncer.sh
 4. copy file .pgpass.j2 to ~zabbix/.pgpass and edit monitoring user and password, if needed, port too.
-5. restart zabbix-agent daemon.
-6. import "zbx_templates/Template App PgBouncer.xml" into your templates.
-7. apply template "Template App PgBouncer" to pgbouncer node.
+5. chmod 0600 ~zabbix/.pgpass and chown zabbix.zabbix ~zabbix/.pgpass
+6. restart zabbix-agent daemon.
+7. import "zbx_templates/Template App PgBouncer.xml" into your templates.
+8. apply template "Template App PgBouncer" to pgbouncer node.
 9. enjoy.
 
 
