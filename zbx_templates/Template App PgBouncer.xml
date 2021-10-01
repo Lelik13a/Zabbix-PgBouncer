@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>4.4</version>
-    <date>2020-06-03T12:57:36Z</date>
+    <version>5.0</version>
+    <date>2021-10-01T04:58:18Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -21,9 +21,6 @@ Check pools metrics.</description>
             <applications>
                 <application>
                     <name>PgBouncer</name>
-                </application>
-                <application>
-                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
                 </application>
             </applications>
             <items>
@@ -219,6 +216,18 @@ Check pools metrics.</description>
                     </applications>
                 </item>
                 <item>
+                    <name>PgBouncer stats raw</name>
+                    <key>pgbouncer.pool.stats</key>
+                    <history>0</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>PgBouncer</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
                     <name>PgBouncer totals raw</name>
                     <key>pgbouncer.pool.totals</key>
                     <history>0</history>
@@ -394,12 +403,13 @@ Check pools metrics.</description>
                     </master_item>
                 </item>
                 <item>
-                    <name>Total number of SQL queries among all databases</name>
+                    <name>Number of SQL queries among all databases per sec</name>
                     <type>DEPENDENT</type>
                     <key>pgbouncer.total.total_query_count</key>
                     <delay>0</delay>
                     <history>30d</history>
                     <trends>90d</trends>
+                    <units>queries/s</units>
                     <applications>
                         <application>
                             <name>PgBouncer</name>
@@ -410,6 +420,10 @@ Check pools metrics.</description>
                             <type>REGEX</type>
                             <params> total_query_count\s+\|(.*)
 \1</params>
+                        </step>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
                         </step>
                     </preprocessing>
                     <master_item>
@@ -445,12 +459,13 @@ Check pools metrics.</description>
                     </master_item>
                 </item>
                 <item>
-                    <name>Total number of SQL transactions among all databases</name>
+                    <name>Number of SQL transactions among all databases per sec</name>
                     <type>DEPENDENT</type>
                     <key>pgbouncer.total.total_xact_count</key>
                     <delay>0</delay>
                     <history>30d</history>
                     <trends>90d</trends>
+                    <units>transactions/s</units>
                     <applications>
                         <application>
                             <name>PgBouncer</name>
@@ -461,6 +476,10 @@ Check pools metrics.</description>
                             <type>REGEX</type>
                             <params> total_xact_count\s+\|(.*)
 \1</params>
+                        </step>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
                         </step>
                     </preprocessing>
                     <master_item>
@@ -739,8 +758,242 @@ Microsecond part of the maximum waiting time.</description>
                                 <key>pgbouncer.pool.pools</key>
                             </master_item>
                         </item_prototype>
+                        <item_prototype>
+                            <name>Average query duration</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.stats.avg_query_time[{#PGBOUNCER_DATABASE}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <units>ms</units>
+                            <description>Average query duration, in microseconds.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+(\d+)\s+
+\1</params>
+                                </step>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.stats</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Average wait time</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.stats.avg_wait_time[{#PGBOUNCER_DATABASE}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <units>ms</units>
+                            <description>Time spent by clients waiting for a server, in microseconds (average per second).</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+(\d+)\s+
+\1</params>
+                                </step>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.stats</key>
+                            </master_item>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;{$PBBOUNCER.WAIT.TIME}</expression>
+                                    <name>PgBouncer {#PGBOUNCER_DATABASE} wait time over {$PBBOUNCER.WAIT.TIME}ms</name>
+                                    <priority>AVERAGE</priority>
+                                    <description>Time spent by clients waiting for a server, in microseconds (average per second).</description>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Average transaction duration</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.stats.avg_xact_time[{#PGBOUNCER_DATABASE}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <units>ms</units>
+                            <description>Average transaction duration, in microseconds.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+(\d+)\s+
+\1</params>
+                                </step>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.stats</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Number of SQL queries per sec</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.stats.total_query_count[{#PGBOUNCER_DATABASE}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <units>queries/s</units>
+                            <description>Number of SQL queries pooled by pgbouncer per sec.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+\d+\s+\|\s+(\d+)\s+
+\1</params>
+                                </step>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.stats</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Received data</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.stats.total_received[{#PGBOUNCER_DATABASE}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <units>b/s</units>
+                            <description>Network traffic received by pgbouncer in bytes.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+(\d+)\s+
+\1</params>
+                                </step>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.stats</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Sent data</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.stats.total_sent[{#PGBOUNCER_DATABASE}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <units>b/s</units>
+                            <description>Network traffic sent by pgbouncer in bytes.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+\d+\s+\|\s+(\d+)\s+
+\1</params>
+                                </step>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.stats</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Number of SQL transactions per sec</name>
+                            <type>DEPENDENT</type>
+                            <key>pgbouncer.stats.total_xact_count[{#PGBOUNCER_DATABASE}]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <units>transactions/s</units>
+                            <description>Number of SQL transactions pooled by pgbouncer per sec.</description>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>PgBouncer: {#PGBOUNCER_DATABASE}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>{#PGBOUNCER_DATABASE}\s+\|\D+(\d+)\s+\|
+\1</params>
+                                </step>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>pgbouncer.pool.stats</key>
+                            </master_item>
+                        </item_prototype>
                     </item_prototypes>
                     <graph_prototypes>
+                        <graph_prototype>
+                            <name>PgBouncer: Network traffic {#PGBOUNCER_DATABASE}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>199C0D</color>
+                                    <item>
+                                        <host>Template App PgBouncer</host>
+                                        <key>pgbouncer.stats.total_received[{#PGBOUNCER_DATABASE}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>0040FF</color>
+                                    <item>
+                                        <host>Template App PgBouncer</host>
+                                        <key>pgbouncer.stats.total_sent[{#PGBOUNCER_DATABASE}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
                         <graph_prototype>
                             <name>PgBouncer client {#PGBOUNCER_DATABASE}, {#PGBOUNCER_USER}: connections</name>
                             <graph_items>
@@ -808,6 +1061,13 @@ Microsecond part of the maximum waiting time.</description>
                     </graph_prototypes>
                 </discovery_rule>
             </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$PBBOUNCER.WAIT.TIME}</macro>
+                    <value>1000</value>
+                    <description>Time spent by clients waiting for a server, in microseconds (average per second).</description>
+                </macro>
+            </macros>
             <screens>
                 <screen>
                     <name>PgBouncer overview</name>
