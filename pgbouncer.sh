@@ -25,6 +25,11 @@ then
         # get total statistic
     psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show totals;'
 
+elif [ "x$COMMAND" = "xstats" ]
+then
+        # get statistic per db
+    psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show stats;'
+
 elif [ "x$COMMAND" = "xlists" ]
 then
         # get internal information
