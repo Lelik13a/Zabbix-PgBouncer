@@ -40,4 +40,14 @@ then
         # get pools statistic
     psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show pools;'
 
+elif [ "x$COMMAND" = "xdatabases" ]
+then
+        # get pools statistic
+    psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show databases;'
+
+elif [ "x$COMMAND" = "xstate" ]
+then
+        # get pgbouncer state
+    psql -h $PGBOUNCER_HOST -p $PGBOUNCER_PORT -U $MON_USER pgbouncer -t -c 'show state;' | grep "yes"
+
 fi
