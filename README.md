@@ -6,7 +6,7 @@ Check pools metrics.
 
 
 # Dependencies
-psql, bash, zabbix-agent.
+psql, bash, zabbix-agent or zabbix_agent2
 
 Installation
 ============
@@ -14,7 +14,7 @@ Installation
 
 1. create directory and copy pgbouncer.sh to /var/lib/zabbix/externalscripts/
    change homedir for zabbix user usermod -d /var/lib/zabbix zabbix
-2. copy zabbix_agentd.d/pgbouncer.conf to /etc/zabbix/zabbix_agentd.d/
+2. copy zabbix_agentd.d/pgbouncer.conf to /etc/zabbix/zabbix_agentd.d/ or to /etc/zabbix/zabbix_agent2.d/
 3. chmod 755 /var/lib/zabbix/externalscripts/pgbouncer.sh and chown zabbix.zabbix /var/lib/zabbix/externalscripts/pgbouncer.sh
 4. copy file .pgpass.j2 to ~zabbix/.pgpass and edit monitoring user and password, if needed, port too.
 5. chmod 0600 ~zabbix/.pgpass and chown zabbix.zabbix ~zabbix/.pgpass
@@ -28,3 +28,8 @@ PS
 ===========
 You can easily change the settings for monitoring a remote pgbouncer node.
 
+
+PPS
+===========
+Added template for PgBouncer >= 1.19.x.
+Added some items and state.
