@@ -865,8 +865,8 @@ https://github.com/Lelik13a/Zabbix-PgBouncer</description>
                             <trigger_prototypes>
                                 <trigger_prototype>
                                     <uuid>d9ff02aa9833472b9ea7f6426b92817f</uuid>
-                                    <expression>last(/Template App PgBouncer/pgbouncer.pools.client.maxwait[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]) &gt; {$PGBOUNCER.POOLS.MAXWAIT.TIME}</expression>
-                                    <name>PgBouncer {#PGBOUNCER_DATABASE} client max wait time over {$PGBOUNCER.POOLS.MAXWAIT.TIME}</name>
+                                    <expression>last(/Template App PgBouncer/pgbouncer.pools.client.maxwait[{#PGBOUNCER_DATABASE},{#PGBOUNCER_USER}]) &gt; {$PGBOUNCER.POOLS.MAXWAIT.TIME:&quot;{#PGBOUNCER_DATABASE}&quot;}</expression>
+                                    <name>PgBouncer {#PGBOUNCER_DATABASE} client max wait time over {$PGBOUNCER.POOLS.MAXWAIT.TIME:&quot;{#PGBOUNCER_DATABASE}&quot;}</name>
                                     <opdata>wait time: {ITEM.LASTVALUE1}</opdata>
                                     <priority>AVERAGE</priority>
                                     <description>How long the first (oldest) client in the queue has waited, in seconds. If this starts increasing, then the current pool of servers does not handle requests quickly enough. The reason may be either an overloaded server or just too small of a pool_size setting.</description>
@@ -1413,8 +1413,8 @@ Microsecond part of the maximum waiting time.</description>
                             <trigger_prototypes>
                                 <trigger_prototype>
                                     <uuid>8adff22128884a8cb0e30f215776ae00</uuid>
-                                    <expression>last(/Template App PgBouncer/pgbouncer.stats.avg_wait_time[{#PGBOUNCER_DATABASE}])&gt;{$PGBOUNCER.WAIT.TIME}</expression>
-                                    <name>PgBouncer {#PGBOUNCER_DATABASE} wait time over {$PGBOUNCER.WAIT.TIME}</name>
+                                    <expression>last(/Template App PgBouncer/pgbouncer.stats.avg_wait_time[{#PGBOUNCER_DATABASE}])&gt;{$PGBOUNCER.WAIT.TIME:&quot;{#PGBOUNCER_DATABASE}&quot;}</expression>
+                                    <name>PgBouncer {#PGBOUNCER_DATABASE} wait time over {$PGBOUNCER.WAIT.TIME:&quot;{#PGBOUNCER_DATABASE}&quot;}</name>
                                     <opdata>awg wait time: {ITEM.LASTVALUE1}</opdata>
                                     <priority>AVERAGE</priority>
                                     <description>Time spent by clients waiting for a server, in seconds (average per second).</description>
@@ -1677,8 +1677,8 @@ Microsecond part of the maximum waiting time.</description>
                     <trigger_prototypes>
                         <trigger_prototype>
                             <uuid>f21f9e2aacac4b2e84872f8e65c88924</uuid>
-                            <expression>{$PGBOUNCER.CL.CONN.WARN}/100 * last(/Template App PgBouncer/pgbouncer.databases.pool_size[{#PGBOUNCER_DATABASE}]) &lt;= last(/Template App PgBouncer/pgbouncer.databases.current_client_connections[{#PGBOUNCER_DATABASE}])</expression>
-                            <name>Client connections for DB {#PGBOUNCER_DATABASE} over {$PGBOUNCER.CL.CONN.WARN}% used</name>
+                            <expression>{$PGBOUNCER.CL.CONN.WARN:&quot;{#PGBOUNCER_DATABASE}&quot;}/100 * last(/Template App PgBouncer/pgbouncer.databases.pool_size[{#PGBOUNCER_DATABASE}]) &lt;= last(/Template App PgBouncer/pgbouncer.databases.current_client_connections[{#PGBOUNCER_DATABASE}])</expression>
+                            <name>Client connections for DB {#PGBOUNCER_DATABASE} over {$PGBOUNCER.CL.CONN.WARN:&quot;{#PGBOUNCER_DATABASE}&quot;}% used</name>
                             <opdata>Clients: {ITEM.LASTVALUE2} (pool:  {ITEM.LASTVALUE1})</opdata>
                             <priority>WARNING</priority>
                             <description>pool_size
@@ -1688,8 +1688,8 @@ current_client_connections
                         </trigger_prototype>
                         <trigger_prototype>
                             <uuid>8756712dfe054602a9d38f138b2c57d9</uuid>
-                            <expression>{$PGBOUNCER.DB.CONN.WARN}/100 * last(/Template App PgBouncer/pgbouncer.databases.max_connections[{#PGBOUNCER_DATABASE}]) &lt;= last(/Template App PgBouncer/pgbouncer.databases.current_connections[{#PGBOUNCER_DATABASE}])</expression>
-                            <name>Connections to DB {#PGBOUNCER_DATABASE} over {$PGBOUNCER.DB.CONN.WARN}% used</name>
+                            <expression>{$PGBOUNCER.DB.CONN.WARN:&quot;{#PGBOUNCER_DATABASE}&quot;}/100 * last(/Template App PgBouncer/pgbouncer.databases.max_connections[{#PGBOUNCER_DATABASE}]) &lt;= last(/Template App PgBouncer/pgbouncer.databases.current_connections[{#PGBOUNCER_DATABASE}])</expression>
+                            <name>Connections to DB {#PGBOUNCER_DATABASE} over {$PGBOUNCER.DB.CONN.WARN:&quot;{#PGBOUNCER_DATABASE}&quot;}% used</name>
                             <opdata>Used connections: {ITEM.LASTVALUE2} (max:  {ITEM.LASTVALUE1})</opdata>
                             <priority>WARNING</priority>
                             <description>max_connections
